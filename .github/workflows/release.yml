@@ -29,6 +29,10 @@ jobs:
         id: get_product_name
         run: echo "PRODUCT_NAME=$(node -p 'require(\"./package.json\").productName')" >> $GITHUB_ENV
 
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -36,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Ensure it's referenced correctly
         with:
           repository: 'SattyaP/releaser'  # Specify the target repository
-          tag_name: ${{ github.ref }}  # Using the tag that triggered the workflow
+          tag_name: ${{ env.TAG_NAME }}  # Using the extracted tag name
           release_name: "Release ${{ env.VERSION }}"
           draft: false
           prerelease: false
