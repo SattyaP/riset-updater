@@ -3,7 +3,7 @@
   "productName": "template",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": "src/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
     "build": "rimraf dist && webpack && electron-builder",
