@@ -2,8 +2,8 @@ name: Release Workflow
 
 on:
   push:
-    tags:
-      - 'v*.*.*'  # This triggers on tags like v1.0.0
+    branches:
+      - main 
 
 jobs:
   release:
