@@ -52,7 +52,8 @@
       "provider": "github",
       "owner": "SattyaP",
       "repo": "releaser",
-      "private": false
+      "private": false,
+      "token": "${GH_TOKEN}"
     },
     "win": {
       "target": "nsis"
