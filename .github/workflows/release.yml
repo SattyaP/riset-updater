@@ -23,11 +23,11 @@ jobs:
 
       - name: Read version from package.json
         id: get_version
-        run: echo "VERSION=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+        run: echo "VERSION=$(node -p 'require(\"./package.json\").version')" >> $GITHUB_ENV
 
       - name: Read productName from package.json
         id: get_product_name
-        run: echo "PRODUCT_NAME=$(node -p \"require('./package.json').productName\")" >> $GITHUB_ENV
+        run: echo "PRODUCT_NAME=$(node -p 'require(\"./package.json\").productName')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -35,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Ensure it's referenced correctly
         with:
-          repository: 'SattyaP/releaser'  # Specify the target repository
+          repository: 'owner/REPO2'  # Specify the target repository
           tag_name: ${{ github.ref }}  # Using the tag that triggered the workflow
           release_name: "Release ${{ env.VERSION }}"
           draft: false
@@ -47,7 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Ensure it's referenced correctly
         with:
-          repository: 'SattyaP/releaser'  # Specify the target repository
+          repository: 'owner/REPO2'  # Specify the target repository
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./dist/*.zip
           asset_name: "${{ env.PRODUCT_NAME }}-${{ env.VERSION }}.zip"
