@@ -1,6 +1,7 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const JavaScriptObfuscator = require("webpack-obfuscator");
+const nodeExternals = require("webpack-node-externals");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
@@ -17,6 +18,7 @@ module.exports = [
         },
         mode: "production",
         target: ["electron-main", "electron-renderer", "electron-preload"],
+        externals: [nodeExternals()],
         module: {
             rules: [{
                 test: /\.js$/,
