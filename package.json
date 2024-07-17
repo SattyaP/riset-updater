@@ -6,7 +6,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "rimraf dist && webpack && electron-builder",
+    "build": "webpack && electron-builder",
     "dist": "electron-builder",
     "webpack": "rimraf dist && webpack"
   },
