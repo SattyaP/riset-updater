@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SattyaP/riset-updater"
+    "url": "https://github.com/SattyaP/releaser"
   },
   "build": {
     "appId": "Template Electron",
@@ -51,7 +51,7 @@
     "publish": {
       "provider": "github",
       "owner": "SattyaP",
-      "repo": "riset-updater",
+      "repo": "releaser",
       "private": false
     },
     "win": {
