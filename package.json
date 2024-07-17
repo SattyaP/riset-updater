@@ -1,0 +1,74 @@
+{
+  "name": "template",
+  "productName": "template",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "rimraf dist && webpack && electron-builder",
+    "dist": "electron-builder",
+    "webpack": "rimraf dist && webpack"
+  },
+  "keywords": [],
+  "author": {
+    "name": "SattyaP",
+    "email": "stylearning7@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron-updater": "^6.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "electron": "31.2.1",
+    "electron-builder": "^24.13.3",
+    "electron-reloader": "^1.2.3",
+    "html-webpack-plugin": "^5.6.0",
+    "javascript-obfuscator": "^4.1.1",
+    "path-browserify": "^1.0.1",
+    "rimraf": "^6.0.1",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0",
+    "webpack-obfuscator": "^3.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SattyaP/riset-updater"
+  },
+  "build": {
+    "appId": "Template Electron",
+    "productName": "Template Electron",
+    "compression": "maximum",
+    "copyright": "Copyrights 2024 Satya",
+    "publish": {
+      "provider": "github",
+      "owner": "SattyaP",
+      "repo": "riset-updater",
+      "private": false
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "build"
+    }
+  }
+}
