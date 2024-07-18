@@ -21,7 +21,9 @@ jobs:
 
       - name: Get latest tag
         id: get_tag
-        run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          echo "tag=$tag" >> $GITHUB_ENV
 
       - name: Create release
         env:
@@ -30,5 +32,5 @@ jobs:
         run: |
           gh release create "$tag" \
               --repo="SattyaP/releaser" \
-              --title="${tag#v1.0.0}" \
+              --title="${tag#v}" \
               --generate-notes
