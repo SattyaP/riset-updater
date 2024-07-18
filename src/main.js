@@ -6,14 +6,6 @@ const url = require("url");
 let updateCheckInProgress = true;
 let mainWindow;
 
-const server = 'https://github.com/SattyaP/releaser';
-const feed = `${server}/releases/download/${app.getVersion()}`;
-
-autoUpdater.setFeedURL({
-  provider: "github",
-  url: feed,
-});
-
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -42,6 +34,8 @@ const createWindow = () => {
       "**/build/**", 
     ],
   });
+
+  mainWindow.webContents.openDevTools();
 
   // app.isPackaged && Menu.setApplicationMenu(null);
 
