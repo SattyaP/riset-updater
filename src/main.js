@@ -10,7 +10,7 @@ const server = 'https://github.com/SattyaP/releaser';
 const feed = `${server}/releases/download/${app.getVersion()}`;
 
 autoUpdater.setFeedURL({
-  provider: 'generic',
+  provider: "github",
   url: feed,
 });
 
@@ -22,7 +22,7 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
       contextIsolation: true,
-      devTools: !app.isPackaged,
+      // devTools: !app.isPackaged,
     },
   });
 
@@ -43,7 +43,7 @@ const createWindow = () => {
     ],
   });
 
-  app.isPackaged && Menu.setApplicationMenu(null);
+  // app.isPackaged && Menu.setApplicationMenu(null);
 
   autoUpdater.checkForUpdatesAndNotify();
 
@@ -58,6 +58,11 @@ const createWindow = () => {
 
   autoUpdater.on("update-downloaded", () => {
     mainWindow.webContents.send("update_downloaded");
+  });
+
+  autoUpdater.on("error", (error) => {
+    updateCheckInProgress = false;
+    mainWindow.webContents.send("update_error", error);
   });
 };
 

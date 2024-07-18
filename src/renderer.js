@@ -36,3 +36,10 @@ ipcRenderer.receive('update_downloaded', () => {
 restartButton.addEventListener("click", (e) => {
     ipcRenderer.send('restart_app');
 })
+
+ipcRenderer.receive('update_error', (error) => {
+    ipcRenderer.removeAllListeners('update_error');
+    message.innerText = 'Error in downloading the update. Please try again later.';
+    warp.classList.remove('hidden');
+    loaderDownload.classList.add('hidden');
+});
