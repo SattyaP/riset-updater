@@ -6,6 +6,14 @@ const url = require("url");
 let updateCheckInProgress = true;
 let mainWindow;
 
+const server = 'https://github.com/SattyaP/releaser';
+const feed = `${server}/releases/download/${app.getVersion()}`;
+
+autoUpdater.setFeedURL({
+  provider: 'generic',
+  url: feed,
+});
+
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
