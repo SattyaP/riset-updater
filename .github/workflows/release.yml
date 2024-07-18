@@ -1,9 +1,9 @@
 name: Create release
 
 on:
-push:
-  branches:
-    - main
+  push:
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
@@ -13,6 +13,12 @@ jobs:
     name: Release pushed tag
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
