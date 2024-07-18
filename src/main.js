@@ -34,7 +34,7 @@ const createWindow = () => {
     })
   );
 
-  require("electron-reloader")(module, {
+  !app.isPackaged && require("electron-reloader")(module, {
     debug: true,
     watchRenderer: true,
     ignore: [

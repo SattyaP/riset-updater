@@ -1,12 +1,13 @@
 {
   "name": "template",
   "productName": "template",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "My Electron application description",
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "rimraf dist && webpack && electron-builder -p always",
+    "build": "rimraf dist && webpack && electron-builder",
+    "deploy": "rimraf dist && webpack && electron-builder -p always",
     "dist": "electron-builder",
     "webpack": "rimraf dist && webpack"
   },
