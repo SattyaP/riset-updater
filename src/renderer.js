@@ -1,5 +1,6 @@
 const { ipcRenderer, getVersion } = window.electron
 
+const progsDown = document.getElementById('download-progress')
 const version = document.getElementById('version')
 const warp = document.getElementById('warp');
 const message = document.getElementById('message');
@@ -18,10 +19,9 @@ ipcRenderer.receive('update_available', () => {
 });
 
 ipcRenderer.receive('update_progress', (progress) => {
-    let updateProgress = progress;
-    const progsDown = document.getElementById('download-progress')
-    progsDown.style.width = updateProgress + '%'
-    progsDown.setAttribute('aria-valuenow', updateProgress)
+    message.innerText = `Downloaded ${progress.transferred} MB of ${progress.total} MB at ${progress.speed} KB/s`
+    progsDown.style.width = progress.percent + '%'
+    progsDown.setAttribute('aria-valuenow', progress.percent)
 });
 
 ipcRenderer.receive('update_downloaded', () => {

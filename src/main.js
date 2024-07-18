@@ -1,9 +1,16 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const { autoUpdater } = require("electron-updater");
+const log = require("electron-log");
 const path = require("path");
 const url = require("url");
 
-let updateCheckInProgress = true;
+log.transports.file.resolvePath = () =>
+  path.join(app.getPath("userData"), "logs", "main.log");
+log.info("App starting...");
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
+
 let mainWindow;
 
 const createWindow = () => {
@@ -26,36 +33,51 @@ const createWindow = () => {
     })
   );
 
-  !app.isPackaged && require("electron-reloader")(module, {
-    debug: true,
-    watchRenderer: true,
-    ignore: [
-      "**/dist/**", 
-      "**/build/**", 
-    ],
-  });
+  !app.isPackaged &&
+    require("electron-reloader")(module, {
+      debug: true,
+      watchRenderer: true,
+      ignore: ["**/dist/**", "**/build/**"],
+    });
 
-  mainWindow.webContents.openDevTools();
-
-  // app.isPackaged && Menu.setApplicationMenu(null);
+  app.isPackaged && Menu.setApplicationMenu(null);
 
   autoUpdater.checkForUpdatesAndNotify();
 
   autoUpdater.on("download-progress", (progress) => {
-    mainWindow.webContents.send("update_progress", progress.percent);
+    const speed = (progress.bytesPerSecond / 1024).toFixed(2);
+    const percent = progress.percent.toFixed(2);
+    const transferred = (progress.transferred / 1024 / 1024).toFixed(2);
+    const total = (progress.total / 1024 / 1024).toFixed(2);
+
+    log.info(`Download speed: ${speed} KB/s`);
+    log.info(`Downloaded ${transferred} MB of ${total} MB (${percent}%)`);
+
+    const progresst = {
+      speed: speed,
+      percent: percent,
+      transferred: transferred,
+      total: total,
+    }
+
+    mainWindow.webContents.send(
+      "update_progress",
+      progresst
+    );
   });
 
   autoUpdater.on("update-available", () => {
-    updateCheckInProgress = false;
+    log.info("Update available.");
     mainWindow.webContents.send("update_available");
   });
 
   autoUpdater.on("update-downloaded", () => {
+    log.info("Update downloaded.");
     mainWindow.webContents.send("update_downloaded");
   });
 
   autoUpdater.on("error", (error) => {
-    updateCheckInProgress = false;
+    log.error("Error in auto-updater. " + error);
     mainWindow.webContents.send("update_error", error);
   });
 };
